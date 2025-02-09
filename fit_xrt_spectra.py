@@ -287,7 +287,7 @@ def run_spectral_fit(models= ['pegged_powerlaw'], uplim_files=[], low_energy_fit
     # Also get other parameters of interest
     IDs = np.array([sf[14:-8] for sf in spectral_files])
     mode = np.array([file[-10:-8] for file in spectral_files]) # PC or WT
-    cstat = np.array([True if tot_count==1 else False for tot_count in tot_counts])
+    cstat = np.array([True if bin_count==1 else False for bin_count in bin_counts])
 
     # Filtering -- ignore spectra with very low counts
     # We do not want to fit the observations identified as uplims from the lightcurve generation (as we deal with these separately)
@@ -478,7 +478,7 @@ def run_spectral_fit(models= ['pegged_powerlaw'], uplim_files=[], low_energy_fit
                         comp = getattr(mod_obj, comp_name)
                         for par_name in comp.parameterNames: # Iterate through parameters, e.g. Tin
                             if par_name not in ["Emin", "Emax", "eMin", "eMax"]: # Skip fixed parameters (like norm for diskbb, and Emin/Emax)
-                                if par_name == 'norm' and comp_name == 'diskbb': pass ###TODO: Could remove?
+                                if par_name == 'norm' and mod_name in ['diskbb', 'powerlaw+diskbb']: pass 
                                 else:
                                     param = getattr(comp, par_name)
                                     xrt_dict[mod_name].setdefault(par_name, []).append(param.values[0]) # best value
@@ -497,7 +497,7 @@ def run_spectral_fit(models= ['pegged_powerlaw'], uplim_files=[], low_energy_fit
                     comp = getattr(mod_obj, comp_name)
                     for par_name in comp.parameterNames:
                         if par_name not in ["Emin", "Emax", "eMin", "eMax"]:
-                            if par_name == 'norm' and comp_name == 'diskbb': pass ###TODO: Could remove?
+                            if par_name == 'norm' and mod_name in ['diskbb', 'powerlaw+diskbb']: pass 
                             else: # append -1s to indicate failure
                                 xrt_dict[mod_name].setdefault(par_name, []).append(-1)
                                 xrt_dict[mod_name].setdefault(par_name + '_neg', []).append(-1)

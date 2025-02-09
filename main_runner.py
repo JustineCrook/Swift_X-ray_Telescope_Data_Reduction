@@ -64,7 +64,7 @@ if __name__ in "__main__":
 
 
     ## RE-BIN THE SPECTRA
-    if analysis_type=="group_spectra":
+    elif analysis_type=="group_spectra":
         # Group the spectra -- required before running spectral fits
         group_spectra(min_E_keV , min_counts_chi)
         
@@ -75,7 +75,7 @@ if __name__ in "__main__":
 
 
     ## FIT THE SPECTRA WITH NO FIXED PARAMETERS, AND GET INITIAL SPECTRAL FIT RESULTS
-    elif analysis_type=="uncontrained_fit": 
+    elif analysis_type=="unconstrained_fit": 
         run_spectral_fit(models, uplims_IDs, min_E_keV, fix={}) # fit the spectra
         get_results(models, fixing=False) # output the fit results
         plot_all_spectral_fit_results(models, fixing=False) # plot all the fit results
